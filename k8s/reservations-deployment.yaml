@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reservations-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reservations
+  template:
+    metadata:
+      labels:
+        app: reservations
+    spec:
+      containers:
+        - image: jbozic4/badminton-app-reservations
+          name: reservations
+          ports:
+            - containerPort: 8080
+              name: server
+              protocol: TCP
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: reservations
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: server
+  selector:
+    app: reservations
