@@ -8,9 +8,9 @@ public class Reservation {
 
     private Integer duration;
 
-    private int user;
+    private Integer user;
 
-    private int court;
+    private Integer court;
 
     private Date dateCreated;
 
@@ -32,7 +32,7 @@ public class Reservation {
         this.duration = duration;
     }
 
-    public int getUser() {
+    public Integer getUser() {
         return user;
     }
 
@@ -40,7 +40,7 @@ public class Reservation {
         this.user = user;
     }
 
-    public int getCourt() {
+    public Integer getCourt() {
         return court;
     }
 

@@ -5,10 +5,7 @@ import si.fri.rso.badmintonappreservations.services.beans.ReservationBean;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -37,18 +34,62 @@ public class ReservationResource {
         return Response.status(Response.Status.OK).entity(reservations).build();
     }
 
-   /*@GET
-    @Path("/{courtId}")
-    public Response getImageMetadata(@PathParam("courtId") Integer courtId) {
+    @GET
+    @Path("/{resId}")
+    public Response getReservation(@PathParam("resId") Integer resId) {
 
-        Court cort = courtBean.getCourt(courtId);
+        Reservation res = resBean.getReservation(resId);
 
-        if (cort == null) {
+        if (res == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        return Response.status(Response.Status.OK).entity(cort).build();
-    }*/
+        return Response.status(Response.Status.OK).entity(res).build();
+    }
+
+    @POST
+    public Response createReservation(Reservation res) {
+
+        if (res.getCourt() == null || res.getDateCreated() == null || res.getDateReserved() == null || res.getUser() == null || res.getDuration() == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        else {
+            res = resBean.createReservation(res);
+        }
+
+        return Response.status(Response.Status.CREATED).entity(res).build();
+
+    }
+
+    @DELETE
+    @Path("{resId}")
+    public Response deleteReservation(@PathParam("resId") Integer resId){
+
+        boolean deleted = resBean.deleteReservation(resId);
+
+        if (deleted) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+        else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @PUT
+    @Path("{resId}")
+    public Response putReservation(@PathParam("resId") Integer resId,
+                             Reservation res){
+
+        res = resBean.putReservation(resId, res);
+
+        if (res == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.status(Response.Status.NOT_MODIFIED).build();
+
+    }
+
 
 
 
