@@ -130,7 +130,7 @@ public class ReservationResource {
     })
     @PUT
     @Path("{resId}")
-    public Response putReservation(@Parameter(description = "Metadata ID.", required = true)
+    public Response putReservation(@Parameter(description = "Reservation ID.", required = true)
                                        @PathParam("resId") Integer resId,
                                    @RequestBody(
                                            description = "DTO object with reservation data.",
