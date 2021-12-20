@@ -13,7 +13,7 @@ spec:
         app: reservations
     spec:
       containers:
-        - image: jbozic4/badminton-app-reservations
+        - image: cesarmarti/badminton-app-reservations
           name: reservations
           ports:
             - containerPort: 8080

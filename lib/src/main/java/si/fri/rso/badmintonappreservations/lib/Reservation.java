@@ -16,6 +16,27 @@ public class Reservation {
 
     private Date dateReserved;
 
+    private User userObj;
+
+    public User getUserObj() {
+        return userObj;
+    }
+
+    public void setUserObj(User userObj) {
+        this.userObj = userObj;
+    }
+
+    public Court getCourtObj() {
+        return courtObj;
+    }
+
+    public void setCourtObj(Court courtObj) {
+        this.courtObj = courtObj;
+    }
+
+    private Court courtObj;
+
+
     public Integer getId() {
         return id;
     }
