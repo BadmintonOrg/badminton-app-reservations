@@ -1,6 +1,7 @@
 package si.fri.rso.badmintonappreservations.api.v1.resources;
 
 import com.kumuluz.ee.cors.annotations.CrossOrigin;
+import com.kumuluz.ee.logs.cdi.Log;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -23,11 +24,12 @@ import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Log
 @ApplicationScoped
 @Path("/reservations")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@CrossOrigin(supportedMethods = "GET, POST, HEAD, DELETE, OPTIONS")
+@CrossOrigin(supportedMethods = "GET, POST, HEAD, DELETE, OPTIONS, PUT")
 public class ReservationResource {
 
     private Logger log = Logger.getLogger(ReservationResource.class.getName());
@@ -47,8 +49,11 @@ public class ReservationResource {
             )})
     @GET
     public Response getReservations() {
+
+        log.info("Get all reservations.");
         List<Reservation> reservations = resBean.getReservations(uriInfo);
 
+        log.info("Returning reservations.");
         return Response.status(Response.Status.OK).entity(reservations).build();
     }
 
@@ -64,12 +69,15 @@ public class ReservationResource {
     public Response getReservation(@Parameter(description = "Reservation ID.", required = true)
                                        @PathParam("resId") Integer resId) {
 
+        log.info("Get info for reservation with id " + resId);
         Reservation res = resBean.getReservation(resId);
 
         if (res == null) {
+            log.info("No reservation found.");
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
+        log.info("Returning data for reservation with id " + resId);
         return Response.status(Response.Status.OK).entity(res).build();
     }
 
@@ -86,13 +94,16 @@ public class ReservationResource {
             required = true, content = @Content(
             schema = @Schema(implementation = Reservation.class))) Reservation res) {
 
+        log.info("Called method for new reservation");
         if (res.getCourt() == null || res.getDateCreated() == null || res.getDateReserved() == null || res.getUser() == null || res.getDuration() == null) {
+            log.info("New reservation not added. Bad request.");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         else {
             res = resBean.createReservation(res);
         }
 
+        log.info("New reservation added");
         return Response.status(Response.Status.CREATED).entity(res).build();
 
     }
@@ -113,12 +124,15 @@ public class ReservationResource {
     public Response deleteReservation(@Parameter(description = "Reservation ID.", required = true)
                                           @PathParam("resId") Integer resId){
 
+        log.info("Called method to delete reservation");
         boolean deleted = resBean.deleteReservation(resId);
 
         if (deleted) {
+            log.info("Reservation not deleted. Bad request.");
             return Response.status(Response.Status.NO_CONTENT).build();
         }
         else {
+            log.info("Deleted reservation with id " + resId);
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -140,12 +154,15 @@ public class ReservationResource {
                                            schema = @Schema(implementation = Reservation.class)))
                                            Reservation res){
 
+        log.info("Called method to update reservation");
         res = resBean.putReservation(resId, res);
 
         if (res == null) {
+            log.info("Reservation not updated. Bad request.");
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
+        log.info("Updated reservation with id " + resId);
         return Response.status(Response.Status.NOT_MODIFIED).build();
 
     }
