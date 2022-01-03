@@ -23,7 +23,7 @@ public class ReservationEntity {
     private Integer user;
 
     @Column(name="court_id")
-    private int court;
+    private Integer court;
 
     @Column(name="date_created")
     private Date dateCreated;
@@ -47,7 +47,7 @@ public class ReservationEntity {
         this.duration = duration;
     }
 
-    public int getUser() {
+    public Integer getUser() {
         return user;
     }
 
@@ -55,7 +55,7 @@ public class ReservationEntity {
         this.user = user;
     }
 
-    public int getCourt() {
+    public Integer getCourt() {
         return court;
     }
 

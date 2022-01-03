@@ -8,13 +8,34 @@ public class Reservation {
 
     private Integer duration;
 
-    private int user;
+    private Integer user;
 
-    private int court;
+    private Integer court;
 
     private Date dateCreated;
 
     private Date dateReserved;
+
+    private User userObj;
+
+    public User getUserObj() {
+        return userObj;
+    }
+
+    public void setUserObj(User userObj) {
+        this.userObj = userObj;
+    }
+
+    public Court getCourtObj() {
+        return courtObj;
+    }
+
+    public void setCourtObj(Court courtObj) {
+        this.courtObj = courtObj;
+    }
+
+    private Court courtObj;
+
 
     public Integer getId() {
         return id;
@@ -32,7 +53,7 @@ public class Reservation {
         this.duration = duration;
     }
 
-    public int getUser() {
+    public Integer getUser() {
         return user;
     }
 
@@ -40,7 +61,7 @@ public class Reservation {
         this.user = user;
     }
 
-    public int getCourt() {
+    public Integer getCourt() {
         return court;
     }
 

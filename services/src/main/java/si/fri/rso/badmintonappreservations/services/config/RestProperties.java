@@ -14,6 +14,17 @@ public class RestProperties {
 
     private Boolean broken;
 
+    public Boolean getUserDiscovery() {
+        return userDiscovery;
+    }
+
+    public void setUserDiscovery(Boolean userDiscovery) {
+        this.userDiscovery = userDiscovery;
+    }
+
+    @ConfigValue(watch = true)
+    private Boolean userDiscovery = true;
+
     public Boolean getMaintenanceMode() {
         return this.maintenanceMode;
     }
